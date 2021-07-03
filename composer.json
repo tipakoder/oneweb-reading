@@ -1,0 +1,9 @@
+{
+    "require": {
+        "phpoffice/phpword": "^0.18.1",
+        "tecnickcom/tcpdf": "^6.4",
+        "mpdf/mpdf": "^8.0",
+      "ext-pdo": "*",
+        "phpmailer/phpmailer": "^6.5"
+    }
+}

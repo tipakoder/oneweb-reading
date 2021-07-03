@@ -1,0 +1,70 @@
+[
+    {
+        "url": "/send/",
+        "method": "get",
+        "controller": "account",
+        "function": "send",
+        "fields": [
+            "to",
+            "subject",
+            "message"
+        ]
+    },
+
+    {
+        "url" : "/auth/",
+        "method" : "get",
+        "controller" : "account",
+        "function" : "auth",
+        "fields": [
+            "login", 
+            "password"
+        ]
+    },
+
+    {
+        "url" : "/registration/",
+        "method" : "get",
+        "controller" : "account",
+        "function" : "registration",
+        "fields": [
+            "firstname",
+            "lastname",
+            "middlename",
+            "email",
+            "date"
+        ]
+    },
+
+    {
+        "url" : "/resendCode/",
+        "method" : "get",
+        "controller" : "account",
+        "function" : "send_another_code",
+        "fields": [
+            "id"
+        ]
+    },
+
+    {
+        "url" : "/verifyAccount/",
+        "method" : "get",
+        "controller" : "account",
+        "function" : "verify_account",
+        "fields": [
+            "id",
+            "code"
+        ]
+    },
+
+    {
+        "url" : "/getAccount/",
+        "method" : "get",
+        "controller" : "account",
+        "function" : "get",
+        "fields": [
+            "id",
+            "code"
+        ]
+    }
+]
