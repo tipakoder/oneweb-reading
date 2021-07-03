@@ -84,7 +84,7 @@ function send_another_code(){
     send_answer([], true);
 }
 
-function verify_account(){
+function verify(){
     global $currentOptions;
     // Собираем данные
     $account_id = verify_field("ID аккаунта", $currentOptions["id"], 1, 12);
@@ -110,6 +110,17 @@ function verify_account(){
         send_answer(["Не удалось активировать аккаунт"]);
     }
     send_answer([], true);
+}
+
+function get(){
+    global $currentOptions;
+    // Собираем данные
+    $account_id = verify_field("ID аккаунта", $currentOptions["id"], 1, 12);
+    // Получение аккаунта по ID
+    if(!($query = dbQueryOne("SELECT email, verify FROM account WHERE id = ?", [$account_id]))){
+        send_answer(["Данного аккаунта не существует"]);
+    }
+    send_answer(["account" => $query], true);
 }
 
 function send(){

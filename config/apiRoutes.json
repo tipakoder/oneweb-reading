@@ -41,6 +41,7 @@
         "method" : "get",
         "controller" : "account",
         "function" : "send_another_code",
+        "auth": true,
         "fields": [
             "id"
         ]
@@ -50,7 +51,8 @@
         "url" : "/verifyAccount/",
         "method" : "get",
         "controller" : "account",
-        "function" : "verify_account",
+        "function" : "verify",
+        "auth": true,
         "fields": [
             "id",
             "code"
@@ -62,9 +64,19 @@
         "method" : "get",
         "controller" : "account",
         "function" : "get",
+        "auth": true,
         "fields": [
-            "id",
-            "code"
+            "id"
         ]
+    },
+
+    {
+        "url" : "/getFunds/",
+        "method" : "get",
+        "controller" : "fund",
+        "function" : "get",
+        "auth": true
     }
+
+
 ]
