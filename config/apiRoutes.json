@@ -37,32 +37,75 @@
     },
 
     {
-        "url" : "/resendCode/",
+        "url" : "/account/resendCode/",
         "method" : "get",
         "controller" : "account",
         "function" : "send_another_code",
-        "auth": true,
-        "fields": [
-            "id"
-        ]
+        "auth": true
     },
 
     {
-        "url" : "/verifyAccount/",
+        "url" : "/account/verify/",
         "method" : "get",
         "controller" : "account",
         "function" : "verify",
         "auth": true,
         "fields": [
-            "id",
             "code"
         ]
     },
 
     {
-        "url" : "/getAccount/",
+        "url" : "/account/get/",
         "method" : "get",
         "controller" : "account",
+        "function" : "get",
+        "auth": true
+    },
+
+    {
+        "url" : "/account/edit/",
+        "method" : "get",
+        "controller" : "account",
+        "function" : "edit",
+        "auth": true,
+        "fields": [
+            "firstname",
+            "lastname",
+            "middlename"
+        ]
+    },
+
+    {
+        "url" : "/account/type/edit/",
+        "method" : "get",
+        "controller" : "account",
+        "function" : "edit_type",
+        "auth": true,
+        "level_access": 0
+    },
+
+    {
+        "url" : "/account/getList/",
+        "method" : "get",
+        "controller" : "account",
+        "function" : "get_list",
+        "auth": true,
+        "level_access": 0
+    },
+
+    {
+        "url" : "/fund/getList/",
+        "method" : "get",
+        "controller" : "fund",
+        "function" : "get_list",
+        "auth": true
+    },
+
+    {
+        "url" : "/fund/get/",
+        "method" : "get",
+        "controller" : "fund",
         "function" : "get",
         "auth": true,
         "fields": [
@@ -71,12 +114,158 @@
     },
 
     {
-        "url" : "/getFunds/",
+        "url" : "/fund/create/",
         "method" : "get",
         "controller" : "fund",
-        "function" : "get",
-        "auth": true
-    }
+        "function" : "create",
+        "auth": true,
+        "level_access": 0,
+        "fields": [
+            "number",
+            "text"
+        ]
+    },
 
+    {
+        "url" : "/inventory/getList/",
+        "method" : "get",
+        "controller" : "inventory",
+        "function" : "get_list",
+        "auth": true,
+        "fields": [
+            "id"
+        ]
+    },
+
+    {
+        "url" : "/inventory/get/",
+        "method" : "get",
+        "controller" : "inventory",
+        "function" : "get",
+        "auth": true,
+        "fields": [
+            "id"
+        ]
+    },
+
+    {
+        "url" : "/inventory/create/",
+        "method" : "get",
+        "controller" : "inventory",
+        "function" : "create",
+        "auth": true,
+        "level_access": 0,
+        "fields": [
+            "id",
+            "number"
+        ]
+    },
+
+    {
+        "url" : "/deal/getList/",
+        "method" : "get",
+        "controller" : "deal",
+        "function" : "get_list",
+        "auth": true,
+        "fields": [
+            "fund_id",
+            "inventory_id"
+        ]
+    },
+
+    {
+        "url" : "/deal/get/",
+        "method" : "get",
+        "controller" : "deal",
+        "function" : "get",
+        "auth": true,
+        "fields": [
+            "id"
+        ]
+    },
+
+    {
+        "url" : "/deal/addFavorite/",
+        "method" : "get",
+        "controller" : "deal",
+        "function" : "add_favorite",
+        "auth": true,
+        "fields": [
+            "id"
+        ]
+    },
+
+    {
+        "url" : "/deal/add/",
+        "method" : "get",
+        "controller" : "deal",
+        "function" : "add",
+        "auth": true,
+        "level_access": 0,
+        "fields": [
+            "fund_id",
+            "inventory_id",
+            "number",
+            "path"
+        ]
+    },
+
+    {
+        "url" : "/appeal/getList/",
+        "method" : "get",
+        "controller" : "appeal",
+        "function" : "get_list",
+        "auth": true,
+        "level_access": 0
+    },
+
+    {
+        "url" : "/appeal/get/",
+        "method" : "get",
+        "controller" : "appeal",
+        "function" : "get",
+        "auth": true,
+        "level_access": 0,
+        "fields": [
+            "id"
+        ]
+    },
+
+    {
+        "url" : "/appeal/create/",
+        "method" : "get",
+        "controller" : "appeal",
+        "function" : "create",
+        "auth": true,
+        "level_access": 1,
+        "fields": [
+            "subject",
+            "text"
+        ]
+    },
+
+    {
+        "url" : "/appeal/answer/",
+        "method" : "get",
+        "controller" : "appeal",
+        "function" : "answer",
+        "auth": true,
+        "level_access": 0,
+        "fields": [
+            "id",
+            "text"
+        ]
+    },
+
+    {
+        "url" : "/search/",
+        "method" : "get",
+        "controller" : "search",
+        "function" : "doing",
+        "auth": true,
+        "fields": [
+            "query"
+        ]
+    }
 
 ]

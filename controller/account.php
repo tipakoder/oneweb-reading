@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Авторизация в аккаунта
+ */
 function auth() {
     global $currentOptions, $session_standing;
     // Собираем данные
@@ -26,6 +29,9 @@ function auth() {
     send_answer(["session_key" => $session_key, "session_time" => $session_standing, "account" => $query], true);
 }
 
+/**
+ * Регистрация в аккаунте
+ */
 function registration(){
     global $currentOptions, $session_standing;
     // Собираем данные
@@ -58,6 +64,12 @@ function registration(){
     send_answer(["session_key" => $session_key, "session_time" => $session_standing, "account" => $query], true);
 }
 
+/**
+ * Служебная функция генерация нового кода активации и отправки Email
+ * @param $account_id
+ * @param $email
+ * @return bool
+ */
 function generate_and_send_code($account_id, $email){
     $code = generateRandomString(6, "01234567890");
     $time = time() + 900;
@@ -68,9 +80,12 @@ function generate_and_send_code($account_id, $email){
     return true;
 }
 
+/**
+ * Повторная отправка кода активации
+ */
 function send_another_code(){
-    global $currentOptions;
-    $account_id = verify_field("ID аккаунта", $currentOptions["id"], 1, 12);
+    global $currentUser;
+    $account_id = $currentUser['id'];
     // Получение аккаунта по ID
     if(!($query = dbQueryOne("SELECT email, verify FROM account WHERE id = ?", [$account_id]))){
         send_answer(["Данного аккаунта не существует"]);
@@ -84,10 +99,13 @@ function send_another_code(){
     send_answer([], true);
 }
 
+/**
+ * Подвтерждение аккаунта
+ */
 function verify(){
-    global $currentOptions;
+    global $currentOptions, $currentUser;
     // Собираем данные
-    $account_id = verify_field("ID аккаунта", $currentOptions["id"], 1, 12);
+    $account_id = $currentUser['id'];
     $code = verify_field("Код активакции", $currentOptions["code"], 6, 6);
     // Получение аккаунта по ID
     if(!($query = dbQueryOne("SELECT email, verify FROM account WHERE id = ?", [$account_id]))){
@@ -112,17 +130,56 @@ function verify(){
     send_answer([], true);
 }
 
+/**
+ * Получение аккаунта
+ */
 function get(){
-    global $currentOptions;
-    // Собираем данные
-    $account_id = verify_field("ID аккаунта", $currentOptions["id"], 1, 12);
-    // Получение аккаунта по ID
-    if(!($query = dbQueryOne("SELECT email, verify FROM account WHERE id = ?", [$account_id]))){
-        send_answer(["Данного аккаунта не существует"]);
-    }
-    send_answer(["account" => $query], true);
+    global $currentUser;
+    send_answer(["account" => $currentUser], true);
 }
 
+/**
+ * Редактирование аккаунта
+ */
+function edit(){
+    global $currentOptions, $currentUser;
+    // Собираем данные
+    $firstname = verify_field("Имя", $currentOptions["firstname"], 2, 120);
+    $middlename = verify_field("Отчество", $currentOptions["middlename"], 2, 120);
+    $lastname = verify_field("Отчество", $currentOptions["lastname"], 2, 120);
+    // Попытка обновления
+    if(!dbExecute("UPDATE account SET firstname = ?, middlename = ?, lastname = ? WHERE id = ? LIMIT 1", [$firstname, $middlename, $lastname, $currentUser["id"]])){
+        send_answer(["Неизвестная ошибка редактирования аккаунта"]);
+    }
+    send_answer([], true);
+}
+
+/**
+ * Редактрование типа аккаунта
+ */
+function edit_type(){
+    global $currentUser;
+    // Новый тип
+    $newType = ($currentUser["typeAccount"] == "user") ? "admin" : "user";
+    // Попытка обновления
+    if(!dbExecute("UPDATE account SET typeAccount = ? WHERE id = ? LIMIT 1", [$newType, $currentUser["id"]])){
+        send_answer(["Неизвестная ошибка редактирования аккаунта"]);
+    }
+    send_answer([], true);
+}
+
+/**
+ * Получение списка аккаунтов
+ */
+function get_list(){
+    $accounts = dbQuery("SELECT * FROM account ORDER BY id DESC");
+    send_answer(["accounts" => $accounts], true);
+}
+
+/**
+ * Todo: удалить, как только настроем SMTP
+ * Тестовая функция
+ */
 function send(){
     global $currentOptions;
     $to = $currentOptions["to"];

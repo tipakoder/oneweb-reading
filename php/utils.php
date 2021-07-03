@@ -65,5 +65,12 @@ function upload_file($path, $file){
     if (move_uploaded_file($file['tmp_name'], ROOTDIR.$path)) {
         return true;
     }
-    return false;
+    send_answer("Файл '{$name}' не был загружен");
+}
+
+function get_file($name){
+    if(isset($_FILES[$name]) && $_FILES[$name] !== null){
+        return $_FILES[$name];
+    }
+    send_answer("Файл '{$name}' не был отправлен");
 }

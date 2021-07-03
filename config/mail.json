@@ -2,6 +2,6 @@
   "host": "smtp.send-box.ru",
   "username": "sendbox@oneweb.bizml.ru",
   "password": "BTn9o3ct97m",
-  "support_mail": "sendbox@oneweb.bizml.ru",
-  "support_name": "sendbox"
+  "support_mail": "support@oneweb.bizml.ru",
+  "support_name": "support"
 }

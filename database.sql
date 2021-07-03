@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1
--- Время создания: Июл 03 2021 г., 07:02
+-- Время создания: Июл 03 2021 г., 23:42
 -- Версия сервера: 10.3.16-MariaDB
 -- Версия PHP: 7.3.6
 
@@ -104,7 +104,36 @@ INSERT INTO `account_session` (`id`, `account_id`, `session_key`, `session_time`
 (20, 1, 'ebb06eb9f4a355495994c71502e6a9d6d6643305b4a8ac38a38c030671c98749', 1625241048, '192.168.142.'),
 (21, 1, 'ebb06eb9f4a355495994c71502e6a9d6d6643305b4a8ac38a38c030671c98749', 1625241048, '192.168.142.'),
 (22, 1, 'ebb06eb9f4a355495994c71502e6a9d6d6643305b4a8ac38a38c030671c98749', 1625241048, '192.168.142.'),
-(23, 1, 'e133062c261fe8f2b6bdc94e2814f57f558e0b1e3dce0cfd15915980adcd5fd0', 1625248969, '192.168.142.');
+(23, 1, 'e133062c261fe8f2b6bdc94e2814f57f558e0b1e3dce0cfd15915980adcd5fd0', 1625248969, '192.168.142.'),
+(24, 1, '06b069b601ae71ceafe6f876dec901831860417cc28702f70eceff43ffdf1afb', 1625300005, '10.43.54.183'),
+(25, 1, '3d6fa6769fca6748d03514f2119e15f92daacbf10e9029066c4162b7c288e624', 1625304339, '10.43.54.183'),
+(26, 1, '523bfa2c44a6fb0fd495e2d2c9566892f4a530ecef8c4416d759c775d48b2ac8', 1625304631, '10.43.54.183'),
+(27, 1, '6e57ce58bf1a06e4346481ca3e4256025c3a2721cdfefed1ab05aaae847b219b', 1625307597, '192.168.142.'),
+(28, 1, 'b5a1f1f4e35cf1f0033ad29489470c09d35b754f0d0f76751991721ceb69d053', 1625307829, '192.168.142.'),
+(29, 1, '4c42c079acdbe1c17a59ef6c69250f3d1c93f218727ab64548453681eb626fa9', 1625307833, '10.43.54.183'),
+(30, 1, 'b4cbf403db773a60dd6424d3ae69210f69ef793ee66490afea29bb9eb784a528', 1625308034, '192.168.101.'),
+(31, 1, '8fe3779be250c091411b64fab49acde7240a6f2146905c1149376b6b92079754', 1625311229, '192.168.142.'),
+(32, 1, '60808b5f90ed4a0ea5acf2188e6a1627f8dbb727428f1d2d88134d2b0eee7c0d', 1625325971, '10.43.54.183'),
+(33, 1, 'cc230be7665436674afc9ee6c87a67f75d44ef39b52b6ca5143c030b05edd1e9', 1625326089, '192.168.142.'),
+(34, 1, 'd7c2186c88b21e759c92b2522e2e846ed44a0cf07deb3b93aa2a2bb03e8634e0', 1625332725, '192.168.142.'),
+(35, 1, '5da110a9f247d2ae0697d17d7daf36ad1a0a73c875b829ab4d2e97eb93fba91c', 1625333219, '192.168.142.'),
+(36, 1, '888c36da1a88fdfef6818cf870ecdb47288ec52903b7e805c4afa11687635c19', 1625335288, '10.43.54.183');
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `appeal`
+--
+
+CREATE TABLE `appeal` (
+  `id` int(11) NOT NULL,
+  `waiting` enum('Y','N') NOT NULL DEFAULT 'Y',
+  `account_id` int(11) NOT NULL,
+  `subject` varchar(120) NOT NULL,
+  `text` text NOT NULL,
+  `answer` text NOT NULL,
+  `date` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -116,8 +145,19 @@ CREATE TABLE `deal` (
   `id` int(11) NOT NULL,
   `fund_id` int(11) NOT NULL,
   `inventory_id` int(11) NOT NULL,
-  `number` int(11) NOT NULL
+  `number` varchar(12) NOT NULL,
+  `path` varchar(120) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Дамп данных таблицы `deal`
+--
+
+INSERT INTO `deal` (`id`, `fund_id`, `inventory_id`, `number`, `path`) VALUES
+(1, 1, 1, '1', ''),
+(2, 2, 2, '2', ''),
+(3, 1, 1, '1', '2'),
+(4, 1, 1, '1', '1');
 
 -- --------------------------------------------------------
 
@@ -139,9 +179,20 @@ CREATE TABLE `deal_favorite` (
 
 CREATE TABLE `fund` (
   `id` int(11) NOT NULL,
-  `name` varchar(120) NOT NULL,
-  `shorttext` varchar(255) NOT NULL
+  `number` varchar(12) NOT NULL,
+  `shorttext` varchar(300) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Дамп данных таблицы `fund`
+--
+
+INSERT INTO `fund` (`id`, `number`, `shorttext`) VALUES
+(1, '1', 'Фонд образования'),
+(2, '2', 'Фонд кино'),
+(3, '3', 'test'),
+(4, '1', 'dasda'),
+(5, '12', 'да');
 
 -- --------------------------------------------------------
 
@@ -152,9 +203,20 @@ CREATE TABLE `fund` (
 CREATE TABLE `inventory` (
   `id` int(11) NOT NULL,
   `fund_id` int(11) NOT NULL,
-  `number` int(11) NOT NULL,
+  `number` varchar(12) NOT NULL,
+  `path` int(11) NOT NULL,
   `date` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Дамп данных таблицы `inventory`
+--
+
+INSERT INTO `inventory` (`id`, `fund_id`, `number`, `path`, `date`) VALUES
+(1, 1, '1', 0, 0),
+(2, 1, '2', 0, 0),
+(3, 1, '1', 0, 0),
+(4, 1, '1', 0, 0);
 
 --
 -- Индексы сохранённых таблиц
@@ -177,6 +239,13 @@ ALTER TABLE `account_confirmation_code`
 -- Индексы таблицы `account_session`
 --
 ALTER TABLE `account_session`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `account_id` (`account_id`);
+
+--
+-- Индексы таблицы `appeal`
+--
+ALTER TABLE `appeal`
   ADD PRIMARY KEY (`id`),
   ADD KEY `account_id` (`account_id`);
 
@@ -229,13 +298,19 @@ ALTER TABLE `account_confirmation_code`
 -- AUTO_INCREMENT для таблицы `account_session`
 --
 ALTER TABLE `account_session`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+
+--
+-- AUTO_INCREMENT для таблицы `appeal`
+--
+ALTER TABLE `appeal`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT для таблицы `deal`
 --
 ALTER TABLE `deal`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT для таблицы `deal_favorite`
@@ -247,13 +322,13 @@ ALTER TABLE `deal_favorite`
 -- AUTO_INCREMENT для таблицы `fund`
 --
 ALTER TABLE `fund`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT для таблицы `inventory`
 --
 ALTER TABLE `inventory`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Ограничения внешнего ключа сохраненных таблиц
@@ -270,6 +345,12 @@ ALTER TABLE `account_confirmation_code`
 --
 ALTER TABLE `account_session`
   ADD CONSTRAINT `account_session_ibfk_1` FOREIGN KEY (`account_id`) REFERENCES `account` (`id`);
+
+--
+-- Ограничения внешнего ключа таблицы `appeal`
+--
+ALTER TABLE `appeal`
+  ADD CONSTRAINT `appeal_ibfk_1` FOREIGN KEY (`account_id`) REFERENCES `account` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Ограничения внешнего ключа таблицы `deal`
