@@ -87,7 +87,7 @@ function make_dir($structure){
 
 function scan_dir($path, $allow_ext = "tiff;jpg"){
     $exts = explode(";", $allow_ext);
-    $list = scandir($path);
+    $list = scandir(ROOTDIR.$path);
     $result_list = [];
     foreach ($list as $item){
         if($item !== "." && $item !== ".."){
