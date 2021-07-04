@@ -21,6 +21,8 @@ function get(){
     }
     // Получение списка описей по ID
     $inventory = dbQuery("SELECT * FROM inventory WHERE fund_id = ?", [$fund_id]);
+    // Логирование
+    log_add("fund", $fund_id);
     send_answer(["fund" => $fund, "inventory" => $inventory], true);
 }
 

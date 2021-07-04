@@ -95,6 +95,14 @@
     },
 
     {
+        "url" : "/account/logout/",
+        "method" : "get",
+        "controller" : "account",
+        "function" : "logout",
+        "auth": true
+    },
+
+    {
         "url" : "/fund/getList/",
         "method" : "get",
         "controller" : "fund",
@@ -150,7 +158,7 @@
 
     {
         "url" : "/inventory/create/",
-        "method" : "get",
+        "method" : "post",
         "controller" : "inventory",
         "function" : "create",
         "auth": true,
@@ -196,6 +204,14 @@
     },
 
     {
+        "url" : "/deal/getFavorite/",
+        "method" : "get",
+        "controller" : "deal",
+        "function" : "get_favorite",
+        "auth": true
+    },
+
+    {
         "url" : "/deal/add/",
         "method" : "get",
         "controller" : "deal",
@@ -217,6 +233,14 @@
         "function" : "get_list",
         "auth": true,
         "level_access": 0
+    },
+
+    {
+        "url" : "/appeal/ready/getList/",
+        "method" : "get",
+        "controller" : "appeal",
+        "function" : "get_list_ready",
+        "auth": true
     },
 
     {
@@ -266,6 +290,38 @@
         "fields": [
             "query"
         ]
+    },
+
+    {
+        "url" : "/article/create/",
+        "method" : "get",
+        "controller" : "article",
+        "function" : "create",
+        "auth": true,
+        "level_access": 0,
+        "fields": [
+            "title",
+            "text"
+        ]
+    },
+
+    {
+        "url" : "/article/get/",
+        "method" : "get",
+        "controller" : "article",
+        "function" : "get",
+        "auth": true,
+        "fields": [
+            "id"
+        ]
+    },
+
+    {
+        "url" : "/article/getList/",
+        "method" : "get",
+        "controller" : "article",
+        "function" : "get_list",
+        "auth": true
     }
 
 ]

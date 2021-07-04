@@ -4,7 +4,15 @@
  * Получение списка обращений
  */
 function get_list(){
-    $appeals = dbQuery("SELECT * FROM appeal WHERE waiting = 'Y' ORDER BY id DESC");
+    $appeals = dbQuery("SELECT appeal.*, account.firstname, account.lastname, account.middlename, account.email FROM appeal, account WHERE appeal.waiting = 'Y' AND account.id = appeal.account_id ORDER BY appeal.id DESC");
+    send_answer(["appeals" => $appeals], true);
+}
+
+/**
+ * Получить обращения с ответом
+ */
+function get_list_ready(){
+    $appeals = dbQuery("SELECT appeal.*, account.firstname, account.lastname, account.middlename, account.email FROM appeal, account WHERE appeal.waiting = 'N' AND account.id = appeal.account_id ORDER BY appeal.id DESC");
     send_answer(["appeals" => $appeals], true);
 }
 
@@ -18,7 +26,7 @@ function get(){
     // Получаем обращение и связанный аккаунт
     if($appeal = dbQueryOne("SELECT * FROM appeal WHERE id = ?", [$appeal_id])){
         $account = dbQueryOne("SELECT * FROM account WHERE id = ?", [$appeal["account_id"]]);
-        send_answer(["appeal" => $appeal, "account" => $account]);
+        send_answer(["appeal" => $appeal, "account" => $account], true);
     }
     send_answer(["Обращения не существует"]);
 }
@@ -33,7 +41,7 @@ function create(){
     $text = verify_field("Текст обращения", $currentOptions["text"], 1, 1200);
     $date = time();
     // Создаём обращение
-    if(!dbExecute("INSERT INTO appeal (accunt_id, subject, text, date) VALUE (?, ?, ?, ?)", [$currentUser["id"], $subject, $text, $date])){
+    if(!dbExecute("INSERT INTO appeal (account_id, subject, text, date) VALUE (?, ?, ?, ?)", [$currentUser["id"], $subject, $text, $date])){
         send_answer(["Неизвестная ошибка создания обращения"]);
     }
     send_answer(["appeal_id" => dbLastId()], true);

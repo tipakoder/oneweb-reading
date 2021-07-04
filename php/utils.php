@@ -62,15 +62,39 @@ function load_error($code, $more = null){
 }
 
 function upload_file($path, $file){
-    if (move_uploaded_file($file['tmp_name'], ROOTDIR.$path)) {
-        return true;
+    try {
+        if (move_uploaded_file($file['tmp_name'], ROOTDIR . $path)) {
+            return true;
+        }
+        send_answer(["Файл не был загружен"]);
+    }catch (\Exception $e){
+        send_answer([$e->getMessage()]);
     }
-    send_answer("Файл '{$name}' не был загружен");
 }
 
 function get_file($name){
     if(isset($_FILES[$name]) && $_FILES[$name] !== null){
         return $_FILES[$name];
     }
-    send_answer("Файл '{$name}' не был отправлен");
+    send_answer(["Файл '{$name}' не был отправлен"]);
+}
+
+function make_dir($structure){
+    if (!mkdir($structure, 0777, true)) {
+        send_answer(["Не удалось создать директории"]);
+    }
+}
+
+function scan_dir($path, $allow_ext = "tiff;jpg"){
+    $exts = explode(";", $allow_ext);
+    $list = scandir($path);
+    $result_list = [];
+    foreach ($list as $item){
+        if($item !== "." && $item !== ".."){
+            $boom = explode(".", $item);
+            $ext = array_pop($boom);
+            if(array_search($ext, $exts)) $result_list[] = ["path" => $path . $item, "name" => $item, "ext" => $ext];
+        }
+    }
+    return $result_list;
 }

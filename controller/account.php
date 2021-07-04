@@ -177,6 +177,18 @@ function get_list(){
 }
 
 /**
+ * Выход из аккаунта
+ */
+function logout(){
+    global $currentUser;
+    // Закрытие сессии
+    if(!dbExecute("UPDATE account_session SET active = 'N' WHERE account_id = ? AND active = 'Y'", [$currentUser["id"]])){
+        send_answer(["Неизвестная ошибка закрытия сессии"]);
+    }
+    send_answer([], true);
+}
+
+/**
  * Todo: удалить, как только настроем SMTP
  * Тестовая функция
  */
