@@ -80,7 +80,7 @@ function get_file($name){
 }
 
 function make_dir($structure){
-    if (!mkdir($structure, 0777, true)) {
+    if (!mkdir(ROOTDIR.$structure, 0777, true)) {
         send_answer(["Не удалось создать директории"]);
     }
 }
